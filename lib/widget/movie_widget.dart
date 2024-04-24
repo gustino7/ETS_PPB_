@@ -4,13 +4,12 @@ import 'package:pbb_sqflite/model/db_model.dart';
 class CreateMovieWidget extends StatefulWidget {
   final Model? movie;
   final ValueChanged<String> titleOnSubmit;
-  final ValueChanged<String> descriptionOnSubmit;
+  // final ValueChanged<String> descriptionOnSubmit;
 
   const CreateMovieWidget({
     Key? key,
     this.movie,
     required this.titleOnSubmit,
-    required this.descriptionOnSubmit,
   }) : super(key: key);
 
   @override
@@ -19,6 +18,8 @@ class CreateMovieWidget extends StatefulWidget {
 
 class _CreateMovieWidgetState extends State<CreateMovieWidget> {
   final controller = TextEditingController();
+  final imageC = TextEditingController();
+  final descriptionC = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -32,7 +33,7 @@ class _CreateMovieWidgetState extends State<CreateMovieWidget> {
   Widget build(BuildContext context) {
     final isEditing = widget.movie != null;
     return AlertDialog(
-      title: Text(isEditing? 'Edit Todo' : 'Add Todo'),
+      title: Text(isEditing? 'Edit Movie' : 'Add Movie'),
       content: Form(
           key: formKey,
           child: Column(
@@ -45,13 +46,13 @@ class _CreateMovieWidgetState extends State<CreateMovieWidget> {
               ),
               TextFormField(
                 autofocus: true,
-                controller: controller,
-                decoration: const InputDecoration(hintText: 'Title'),
-                validator: (value) => value != null && value.isEmpty ? 'Title is required' : null,
+                controller: imageC,
+                decoration: const InputDecoration(hintText: 'Image'),
+                validator: (value) => value != null && value.isEmpty ? 'Image is required' : null,
               ),
               TextFormField(
                 autofocus: true,
-                controller: controller,
+                controller: descriptionC,
                 decoration: const InputDecoration(hintText: 'Description'),
                 validator: (value) => value != null && value.isEmpty ? 'Description is required' : null,
               )
@@ -63,7 +64,7 @@ class _CreateMovieWidgetState extends State<CreateMovieWidget> {
         TextButton(
             onPressed: () {
               if (formKey.currentState!.validate()) {
-                widget.onSubmit(controller.text);
+                widget.titleOnSubmit(controller.text);
               }
             },
             child: const Text('OK')

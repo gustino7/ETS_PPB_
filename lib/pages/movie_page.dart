@@ -91,8 +91,8 @@ class _MoviePageState extends State<MoviePage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (_) => CreateMovieWidget(titleOnSubmit: (title), descriptionOnSubmit: (description) async {
-              await movieDB.create(title: title, description: description, image: title);
+            builder: (_) => CreateMovieWidget(titleOnSubmit: (title) async {
+              await movieDB.create(title: title, description: title, image: title);
               if (!mounted) return;
               fetchMovie();
               Navigator.of(context).pop();
